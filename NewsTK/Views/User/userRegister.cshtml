@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+
+@{
+    Layout = null;
+}
+@model RegisterModel
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Register - NewsTK</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <link href="https://getbootstrap.com/docs/5.0/examples/sign-in/signin.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500;800&display=swap" rel="stylesheet">
+
+
+</head>
+<body class="text-center">
+    <main class="form-signin">
+        <form method="POST" asp-action="userRegister" asp-controller="User">
+            <h1 style="font-family: 'Roboto Slab', serif;">NewsTK</h1>
+            <h2 class="h3 mb-3 fw-normal text-muted">Lütfen kayıt olunuz!</h2>
+
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" placeholder="Kullanıcı Adı" asp-for="UserName" name="UserName">
+                <label for="floatingInput">Kullanıcı Adı</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@ornek.com" asp-for="Email" name="Email">
+                <label for="floatingInput">E-posta Adresi</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Parola" asp-for="Password" name="Password">
+                <label for="floatingPassword">Parola</label>
+            </div>
+            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" asp-for="RoleName" name="RoleName">
+                <option>Lütfen üye tipinizi seçiniz</option>
+                <option value="Reader" name="userRole">Reader</option>
+                <option value="Reporter" name="userRole">Reporter</option>
+                <option value="Journalist" name="userRole">Journalist</option>
+
+
+            </select>
+
+            <button class="w-100 btn btn-lg btn-success" type="submit">Üyeliği Tamamla</button>
+        </form>
+    </main>
+</body>
+</html>
+

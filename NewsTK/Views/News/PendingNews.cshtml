@@ -1,0 +1,63 @@
+﻿@model List<PendingNews>
+
+<head>
+
+</head>
+<body>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4 text-primary  ">Gelen Haber Önerileri</h1>
+        <p class="lead">
+            Gelen haberleri onaylayabilir ya da silebilirsiniz.
+        </p>
+    </div>    <table class="table table-secondary table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Author</th>
+                <th scope="col">Read the news</th>
+                <th scope="col">Approve the news</th>
+                <th scope="col">Delete the news</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+            <tr id="@p.Id">
+                <th scope="row">@p.Id</th>
+                <th scope="row">@p.AuthorUserName</th>
+                <td><a class="link-success fs-4" href="/News/ReadPendingNews/@p.Id">Read</a></td>
+                <td><a class="btn btn-success" onclick="Approve(@p.Id);" href="#">Approve</a></td>
+                <td><a class="btn btn-danger" onclick="Delete(@p.Id);" href="#">Delete</a></td>
+            </tr>
+            }
+
+        </tbody>
+    </table>
+
+</body>
+
+<script>
+    function Approve(Id) {
+        $.post("/News/ApproveNews",
+            {
+                Id: Id,
+            },
+            function (data, status) {
+                if (status == "success") {
+                    document.getElementById(Id).remove();
+                }
+            });
+    }
+    function Delete(Id) {
+        $.post("/News/DeleteNews",
+            {
+                Id: Id,
+            },
+            function (data, status) {
+                if (status == "success") {
+                    document.getElementById(Id).remove();
+                }
+            });
+    }
+
+</script>

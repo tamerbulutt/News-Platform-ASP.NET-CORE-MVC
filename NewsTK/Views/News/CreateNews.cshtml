@@ -1,0 +1,34 @@
+﻿@model List<User>
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4 text-danger  ">Yeni Bir Haber Oluştur</h1>
+    <p class="lead">
+        Gerekli bilgileri girerek yeni bir haber oluşturabilirsiniz.
+    </p>
+</div>
+<div class="w-75 mb-3">
+    <form method="POST"  asp-action="createNews" asp-controller="News">
+        <div class="input-group mb-3">
+            <span class="input-group-text">News Title</span>
+            <input type="text" name="Title" class="form-control">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">First Paragraph</span>
+            <textarea name="FirstParagraph" class="form-control"></textarea>
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text">Long Text</span>
+            <textarea name="NewsText" class="form-control"></textarea>
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text">Image URL</span>
+            <input type="text" name="ImageUrl" class="form-control">
+        </div>
+
+        <input type="hidden" name="UserName" value="@User.Identity.Name" />
+
+        <button type="submit" class="btn btn-success w-25"><b>Send</b></button>
+    </form>
+</div>

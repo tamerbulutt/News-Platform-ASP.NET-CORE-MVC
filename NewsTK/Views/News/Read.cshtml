@@ -1,0 +1,122 @@
+﻿@model NewsTK.Models.NewsAndComments
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" id="Title">
+    <h1 class="display-4 text-danger  ">@Model.news.Title</h1>   
+</div>
+<input type="hidden" id="NewsId" value="@Model.news.Id" />
+<div class="container">
+    <div class="row row-cols-1">
+        <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" id="Title">
+            <h5 class="text-dark ">@Model.news.FirstParagraph</h5>
+        </div>   
+    </div>
+    <div>
+        <img class="newsImg mb-3" src="@Model.news.ImageUrl" style="width:100%; max-height:500px;" alt="Alternate Text" />
+        <p class="text-left">
+            @Model.news.NewsText
+        </p>
+    </div>
+    <div class="btn-group-vertical justify-content-end" role="group" aria-label="Vertical radio toggle button group">
+        <input type="radio" class="btn-check btn-sm " name="vbtn-radio" id="vbtn-radio1" autocomplete="off">
+        <label class="btn btn-outline-success justify-content-end" for="vbtn-radio1">
+            <h5 id="likeCount" class="d-inline fs-4">@Model.news.Like</h5>
+            <i class="fas fa-chevron-up"></i>
+        </label>
+        <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio2" autocomplete="off">
+        <label class="btn btn-outline-danger justify-content-end" for="vbtn-radio2">
+            <h5 id="dislikeCount" class="d-inline fs-4">@Model.news.Dislike</h5>
+            <i class="fas fa-chevron-down"></i>
+        </label>
+    </div>
+    <div class="col-sm-1 justify-content-end">
+        <div class="d-block mt-2 justify-content-end">
+            <p class="fw-bolder">@Model.news.Views views</p>
+        </div>
+    </div>
+    <div>
+        <div class="card text-center">
+            <div class="card-header">
+                Haber Sahibi
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@Model.news.UserName</h5>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="container">
+        <h3 style="margin-left:3px;">Yorumlar</h3>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <form asp-action="Read" asp-controller="News" method="post">
+                <div class="input-group mb-3">
+                    <input type="hidden" name="UserName" value="@User.Identity.Name" />
+                    <input type="hidden" name="HaberId" value="@Model.news.Id" />
+                    <input type="hidden" name="Date" value="@DateTime.Now" />
+                    <input type="text" name="CommentText" class="form-control" placeholder="Your comment" aria-label="Your comment" aria-describedby="button-addon2" required>
+                    <button class="btn btn-outline-success" type="submit" id="button-addon2">Send Comment</button>
+                </div>
+            </form>
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+              Yorum yapmak için giriş yapmalısınız <a class="link-primary" href="/User/Login">Giriş yap.</a>
+                Eğer hesabın yoksa, <a class="link-primary" href="/User/userRegister">Kayıt ol.</a>
+            </div>
+        }
+
+        <div>
+            <ul>
+                @foreach (var comment in Model.comments)
+                {
+                    if (Model.comments.Count != 0)
+                    {
+                        double day = (Math.Round((DateTime.Now - comment.Date).TotalDays));
+                        string days = day == 0 ? "bir günden daha kısa bir süre önce" : day.ToString() + " gün";
+                        <li class="my-2">
+                            <div class="card w-75">
+                                <div class="card-body">
+                                    <blockquote class="blockquote mb-0">
+                                        <p>@comment.CommentText</p>
+                                        <footer class="blockquote-footer text-right"> <b>@comment.UserName</b> tarafından @days  önce yazıldı.</footer>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li><p>Henüz bir yorum yapılmamış :( </p></li>
+                    }
+
+                }
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#vbtn-radio1").click(function () {
+        $.post("/News/Like",
+            {
+                Id: $('#NewsId').val(),
+            },
+            function (data, status) {
+                $('#likeCount').text(data);
+            });
+    });
+    $("#vbtn-radio2").click(function () {
+        $.post("/News/Dislike",
+            {
+                Id: $('#NewsId').val(),
+            },
+            function (data, status) {
+                $('#dislikeCount').text(data);
+            });
+    });
+
+</script>

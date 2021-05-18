@@ -1,0 +1,44 @@
+﻿@model List<User>
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4 text-danger  ">Seçtiğiniz gazeteciye bir haber yollayabilirsiniz!</h1>
+    <p class="lead">
+        Gerekli bilgileri girerek yeni bir haber gönderebilirsiniz.
+    </p>
+</div>
+<div class="w-75 align-items-center text-center">
+    <form method="POST" class="align-items-center text-center" asp-action="Add" asp-controller="News">
+        <div class="input-group mb-3 align-items-center">
+            <span class="input-group-text">Haber Başlığı</span>
+            <input type="text" name="Title" class="form-control">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Giriş Paragrafı</span>
+            <textarea name="FirstParagraph" class="form-control"></textarea>
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text">Ana Yazı</span>
+            <textarea name="NewsText" class="form-control"></textarea>
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text">Fotoğraf URL'i</span>
+            <input type="text" name="ImageUrl" class="form-control">
+        </div>
+        <input type="hidden" name="AuthorUserName" value="@User.Identity.Name" />
+
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Gazeteci Tercihiniz</label>
+            <select class="form-select" name="JournalistUserName" id="inputGroupSelect01">
+                <option selected disabled>Gazetecinizi seçiniz..</option>
+                @foreach (var user in Model)
+                {
+                    <option value="@user.UserName">@user.UserName</option>
+                }
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success w-25"><b>Gönder</b></button>
+    </form>
+</div>

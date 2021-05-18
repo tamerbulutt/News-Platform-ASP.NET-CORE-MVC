@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+
+@{
+    Layout = null;
+}
+@model LoginModel
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Giriş Yap - NewsTK</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <link href="https://getbootstrap.com/docs/5.0/examples/sign-in/signin.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500;800&display=swap" rel="stylesheet">
+
+    
+</head>
+<body class="text-center">
+    <main class="form-signin">
+        <form method="POST" asp-controller="User" asp-action="Login">
+            <h1 style="font-family: 'Roboto Slab', serif;">NewsTK</h1>
+            <h2 class="h3 mb-3 fw-normal text-muted">Lütfen Giriş Yapınız</h2>
+            @if (TempData["UserNotFound"] != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @TempData["UserNotFound"]
+                </div>
+            }
+            @if (TempData["PasswordIncorrect"] != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @TempData["PasswordIncorrect"]
+                </div>
+            }
+            <div class="form-floating">
+                <input type="text" class="form-control" id="floatingInput" asp-for="UserName" placeholder="Kullanıcı Adı">
+                <label for="floatingInput">Kullanıcı Adı</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Parola" asp-for="Password">
+                <label for="floatingPassword">Parola</label>
+            </div>
+            <button class="w-100 btn btn-lg btn-success" type="submit">Giriş Yap</button>
+            <p class="fs-6 my-3">
+                Henüz bir hesabın yok mu? <b><a href="/User/userRegister" class="link-primary">Hemen oluştur!</a></b>
+            </p>
+
+        </form>
+    </main>
+</body>
+</html>
+
